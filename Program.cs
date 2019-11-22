@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 using System.Threading;
 
 namespace Learning_C_Sharp
@@ -8,14 +9,23 @@ namespace Learning_C_Sharp
     {
         static void Main(string[] args)
         {
-            Console.Write("Enter a Word or Name - ");
-            string word = Console.ReadLine();
-            Console.Write("Enter a Shift Key - ");
-            string key_shift = Console.ReadLine();
-            int key = Int32.Parse(key_shift);
+            int p = 0; // i am using p as a check varibale makes things easier for me.
+            while(p==0)
+            {
+                Console.Write("Enter a Word or Name - ");
+                string word = Console.ReadLine();
+                Console.Write("Enter a Shift Key - ");
+                string key_shift = Console.ReadLine();
+                int key;
 
-            Console.WriteLine(encrypt(key,word));
+                if (int.TryParse(key_shift, out key) && Regex.IsMatch(word, @"^[a-zA-Z]+$"))
+                {
+                    Console.WriteLine(encrypt(key, word));
+                    p = 1;
+                }
 
+                else { Console.WriteLine("Please Enter Only letters for word and numbers in shift key");}
+            }
         }
 
         public static string encrypt(int key, string word) {
